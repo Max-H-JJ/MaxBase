@@ -1,9 +1,4 @@
 # MaxBase
-This Repository is created for my own project including
-          competition I have participated, projects built in campus, interesting project/algorithms found on the internet
- 
-Each project branch contains 1 source code file and 1 md file for illustrating my design process and my own ideas,
- 
- Another idea for this repository is to record my coding grow up.
- 
- please be free to contact me for further discussing: slyjh4@nottingham.edu.cn
+This branch is created for reproducing Solving Sudoku Puzzle algorithm developed by Peter Norvig: https://norvig.com/sudoku.html
+
+This project will continue to be compeleted. The main ideal is to develop a program that can solve each suduko puzzle, and generate suduko puzzle automatically. The designing ideal please refere to the link of Peter Norvig, in later time a comment md file will be uploaded to show my own idea and designing solutions.
