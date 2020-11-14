@@ -22,17 +22,26 @@ outer_y_element = linspace(0,0.5*outer_height,num_element_inner_y); % elements i
 
 %initialize potential and mask array
 
-solution = zeros(num_element_outer_x,num_element_outer_y); %initialize 2-D array with 0V for outer layer condition
-mask = ones(num_element_outer_x,num_element_outer_y);
+solution = zeros(num_element_outer_x+1,num_element_outer_y+1); %initialize 2-D array with 0V for outer layer condition
+mask = ones(num_element_outer_x+1,num_element_outer_y+1);
 %initial edge values of solution
     %initial the left edge solution        
-for i = 1:num_element_inner_x;
-    for j = 1:num_element_inner_y;
+for i = 1:num_element_inner_x+1;
+    for j = 1:num_element_inner_y+1;
         solution(i,j)=1
         mask(i,j) = 0
     end
 end
 
+
+% for y = num_element_inner_y : num_element_outer_y+1;
+%     solution(1,y) = 1;
+% end
+% for x = num_element_inner_x : num_element_outer_x+1;
+%     solution(x,1) = 1;
+% end
+
+    
 
 %update values of solution grid, calculate capacitance
 oldcap = 0.0
@@ -53,17 +62,8 @@ function grid = convergence_iteration(grid,mask_array,x,y)
 sprintf('updating grid values')
 %grid = solution grid 
 %x , y = num of elements in x/y direction
-
-
-for i = 1:x-1;
-    for j = 1:y-1;
-        if i ==1
-            grid(i,j)=0.25*(2*grid(i+1,j)+grid(i,j-1)+grid(i,j+1))
-        end
-        if j ==1
-           grid(i,j)=0.25*(grid(i-1,j)+grid(i+1,j)+2*grid(i,j+1))
-        end
-        
+for i = 2:x;
+    for j = 2:y;
         grid(i,j)=0.25*(grid(i-1,j)+grid(i+1,j)+grid(i,j-1)+grid(i,j+1))
         if mask_array(i,j)==0%if mask = 0, maintian the grid inner edge value unchanged
             grid(i,j)=1;
@@ -72,7 +72,17 @@ for i = 1:x-1;
     end
 end
 
-end % end grid()
+i = 1
+for j = 2:y;
+    grid(i,j)=0.25*(2*grid(i+1,j)+grid(i,j-1)+grid(i,j+1))
+end
+
+j=1
+for i = 2:x;
+    grid(i,j)=0.25*(grid(i-1,j)+grid(i+1,j)+2*grid(i,j+1))
+end
+
+end % end convergence_iteration()
 
 
 
