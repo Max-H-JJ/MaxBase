@@ -1,6 +1,8 @@
 close all
 clear all
 
+
+
 %initialize coefficients
 I = [0:0.1:2];
 R = 100;
@@ -98,6 +100,8 @@ fourth_muldiv_value_average = zeros(6,21);
 linear_polyfit_value_average = zeros(6,21);
 second_polyfit_value_average = zeros(6,21);
 fourth_polyfit_value_average = zeros(6,21);
+
+
 for i = 1:10;
     for k = 1:6;
     P_data_average(k,:) = P_data_average(k,:)+P_data(k,:,i)/10;
@@ -114,9 +118,18 @@ for i = 1:10;
     end 
 end
 
-%least square fit = muldiv method
+%compute errors for least square fitting
 linear_error = sum((linear_muldiv_value_average' - P_data_average').^2);
 square_error = sum((square_muldiv_value_average' - P_data_average').^2);
 second_error = sum((second_muldiv_value_average' - P_data_average').^2);
-fourth_error = sum(fourth_muldiv_value_average' - P_data_average').^2);
+fourth_error = sum((fourth_muldiv_value_average' - P_data_average').^2);
+
+%plot the fitting result
+figure;
+hold on
+h1=plot(I,linear_muldiv_value_average(1,:),'r',I,square_muldiv_value_average(1,:),'g',I,second_muldiv_value_average(1,:),'b', I,fourth_muldiv_value_average(1,:),'m',I,P_standard,'o');
+hold on
+legend(h1,"Linear Model","Square Model","Second Order Model","Fourth Order Model","Standard Clean Data");
+
+
 
